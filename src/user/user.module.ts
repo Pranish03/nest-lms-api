@@ -3,6 +3,6 @@ import { UserService } from './user.service.js';
 
 @Module({
   providers: [UserService],
-  exports: [UserModule],
+  exports: [UserService],
 })
 export class UserModule {}
