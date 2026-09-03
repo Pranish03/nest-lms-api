@@ -14,13 +14,14 @@ import { UpdateCourseDto } from './dto/update-course.dto.js';
 import { AuthGuard } from '../auth/auth.guard.js';
 import { Roles } from '../auth/roles.decorator.js';
 import { Role } from '../user/user.types.js';
+import { RolesGuard } from '../auth/roles.guard.js';
 
 @Controller('courses')
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.Admin)
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.courseService.create(createCourseDto);
