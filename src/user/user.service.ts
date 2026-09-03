@@ -19,7 +19,8 @@ export class UserService {
     } catch (error: unknown) {
       const e = error as { code?: number };
 
-      if (e.code == 11000) {
+      const DUPLICATE_KEY_CODE = 11000;
+      if (e.code === DUPLICATE_KEY_CODE) {
         throw new ConflictException('Email is already taken');
       }
 
