@@ -1,6 +1,11 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { RegisterDto } from './../auth/dto/register.dto.js';
-import { ConflictException, Injectable } from '@nestjs/common';
+import { LoginDto } from './../auth/dto/login.dto.js';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { User } from './schemas/user.schema.js';
 import { Model } from 'mongoose';
 
@@ -26,5 +31,15 @@ export class UserService {
 
       throw error;
     }
+  }
+
+  async findUser(email: string) {
+    const user = await this.userModel.findOne({ email });
+
+    if (!user) {
+      throw new NotFoundException('Invalid credentials');
+    }
+
+    return user;
   }
 }
